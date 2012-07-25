@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains a subclass of the Zend_Search_Lucene_Analysis_Analyzer_Standard class.
  * Its purpose is to help provide a corresponding PHP implementation of the Standard analyzer for
@@ -18,19 +19,16 @@
  /** StandardAnalyzer_ */
  /* Depending on your circumstances, you may want to change the paths to meet your conventional / functional needs */
 
-require_once 'StandardAnalyzer/Analyzer/Standard.php';
-require_once 'StandardAnalyzer/TokenFilter/EnglishStemmer.php';
-
- /** Zend_Search_Lucene_Analysis_Analyzer_Standard */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
-/** Zend_Search_Lucene_Analysis_TokenFilter_LowerCase */
-require_once 'Zend/Search/Lucene/Analysis/TokenFilter/LowerCase.php';
-/** Zend_Search_Lucene_Analysis_TokenFilter_StopWords */
-require_once 'Zend/Search/Lucene/Analysis/TokenFilter/StopWords.php';
+require_once dirname(__FILE__) . '/../Standard.php';
+require_once dirname(__FILE__) . '/../../TokenFilter/EnglishStemmer.php';
 
 class StandardAnalyzer_Analyzer_Standard_English extends StandardAnalyzer_Analyzer_Standard
 {
-	private $_stopWords = array ("a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with");
+	private $_stopWords = array(
+        'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'for', 'if', 'in', 'into', 'is',
+        'it', 'no', 'not', 'of', 'on', 'or', 's', 'such', 't', 'that', 'the', 'their', 'then',
+        'there', 'these', 'they', 'this', 'to', 'was', 'will', 'with',
+    );
 	
     public function __construct()
     {
@@ -39,4 +37,3 @@ class StandardAnalyzer_Analyzer_Standard_English extends StandardAnalyzer_Analyz
         $this->addFilter(new StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer());	
     }
 }
-

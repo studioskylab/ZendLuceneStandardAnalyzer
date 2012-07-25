@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains a subclass of the Zend_Search_Lucene_Analysis_Analyzer class.
  * Its purpose is to help provide a corresponding PHP implementation of the Standard analyzer for
@@ -15,19 +16,22 @@
  * @category   PHP_Analyzer_Standard
  */
 
-
-/** Zend_Search_Lucene_Analysis_Analyzer */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
-
 abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Analysis_Analyzer
 {
-  /**
+    /**
      * The set of Token filters applied to the Token stream.
      * Array of Zend_Search_Lucene_Analysis_TokenFilter objects.
      *
      * @var array
      */
     private $_filters = array();
+
+    /**
+     * Current position in a stream
+     *
+     * @var integer
+     */
+    private $_position;
 
     /**
      * Add Token filter to the Analyzer
@@ -38,13 +42,6 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
     {
         $this->_filters[] = $filter;
     }
-
-	/**
-     * Current position in a stream
-     *
-     * @var integer
-     */
-    private $_position;
 
     /**
      * Reset token stream
@@ -61,7 +58,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         $this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
         $this->_encoding = 'ASCII';
     }
-	
+    
     /**
      * Apply filters to the token. Can return null when the token was removed.
      *
@@ -81,11 +78,11 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 
         return $token;
     }
-	
-	    public function nextToken()
-		{
-			if ($this->_input === null) {
-				return null;
+    
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
         }
 
         do {
@@ -107,4 +104,3 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         return $token;
     }
 }
-

@@ -12,26 +12,17 @@
  */
 
 /* Depending on your circumstances, you may want to change the paths to meet your conventional / functional needs */
-require_once 'StandardAnalyzer/TokenFilter/EnglishStemmer/PorterStemmer.php';
-/** Zend_Search_Lucene_Analysis_TokenFilter */
-require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
-/** Zend_Search_Lucene_Exception */
-require_once 'Zend/Search/Lucene/Exception.php';
-
+require_once dirname(__FILE__) . '/EnglishStemmer/PorterStemmer.php';
 
 class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_Lucene_Analysis_TokenFilter
 {
-    /**
-     * Stop Words
-     * @var array
-     */
     /**
      * Constructs new instance of this filter.
      *
      * @param array $stopwords array (set) of words that will be filtered out
      */
     public function __construct() 
-	{
+    {
     }
 
     /**
@@ -40,16 +31,16 @@ class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_L
      * @param Zend_Search_Lucene_Analysis_Token $srcToken
      * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) {
-		
-		$newToken = new Zend_Search_Lucene_Analysis_Token(
-                                     PorterStemmer::stem( $srcToken->getTermText() ),
-                                     $srcToken->getStartOffset(),
-                                     $srcToken->getEndOffset());
+    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
+    {
+        $newToken = new Zend_Search_Lucene_Analysis_Token(
+            PorterStemmer::stem($srcToken->getTermText()),
+            $srcToken->getStartOffset(),
+            $srcToken->getEndOffset()
+        );
 
         $newToken->setPositionIncrement($srcToken->getPositionIncrement());
 
         return $newToken;
     }
 }
-
